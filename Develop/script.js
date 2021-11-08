@@ -1,134 +1,157 @@
-// Assignment code here
-
-
-// Get references to the #generate element
+// Assignment Code
 var generateBtn = document.querySelector("#generate");
-  
-function generatePassword() {
-  console.log('Hey! You Clicked the button')
- 
- // function to windows for choosing password criteria
-var getCharacterLength = function() {
-  var length = "";
+var lowercaseChar = "abcdefghijklmnopqrstuvwxyz";
+var uppercaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var numberChar = "0123456789";
+var specialChar = "!@#$%^&*()_-+={}[];:'`~<,>.?/|"
+var length;
+var upper;
+var number;
+var Symbol;
 
-  while (length === "" || length === null) {
-    length = prompt("Choose a length for Your Secure Password. Must be at least 8 characters and no longer than 128 characters.");
-  }
-  if (length > 128) {
+//Length of password
+function getCharacterLength(){
+  length = prompt("Choose a length for Your Secure Password. Must be at least 8 characters and no longer than 128 characters.");
 
-  length = alert("Choose characters between 8 and 128. Try Again");
- getCharacterLength()
-
-  } else if (length < 8) {
-    length = alert("Choose characters between 8 and 128. Try Again");
- getCharacterLength()
-  }
-
-  console.log (length);
-
-  return length;
+    if (length < 8){
+      alert("Choose characters between 8 and 128. Try Again");
+      getCharacterLength();
+    }else if (length > 128){
+      alert("Choose characters between 8 and 128. Try Again");
+      getCharacterLength();
+    }else if (isNaN(length)){
+      alert("Choose characters between 8 and 128. Try Again");
+      getCharacterLength();
+    }else{
+    alert("The next three alerts will let you decide the types of characters you would like to be include in your password. If no types are chosen, then you will automatically generate a password with lowercase letters.");
+    }
+    return length;
 }
 
-var getRandomUpper = function() {
-  var upper = "";
+//Uppercase in the password
+function getRandomUpper(){
+  upper = prompt("Do you want to include uppercase letters in your password? YES or NO?");
+    upper = upper.toLowerCase();
 
-  while (upper === "" || upper === null) {
-    upper = window.confirm("Would you like to include uppercase letters?");
-  }
-  
-  if (upper){
-    console.log (String.fromCharCode(Math.floor(Math.random() * 26) + 65));
+    if (upper === null || upper=== ""){
+      alert("Please answer Yes or No.");
+      getRandomUpper();
 
-  }
-  console.log("You chose " + upper);
-  return upper;
+    }else if (upper === "yes" || upper ==="y"){
+      upper = true;
+      return upper;
+
+    }else if (upper === "no" || upper ==="n"){
+      upper = false;
+      return upper;
+    
+    }else {
+      alert("Please answer Yes or No.");
+      getRandomUpper();
+    }
+    return upper;
 }
 
-var getRandomLower = function() {
-  var lower = "";
+//Numbers in the password
+function getRandomNumber(){
+  number = prompt("Do you want to include numbers in your password? YES or NO?");
+    number = number.toLowerCase();
 
-  while (lower === "" || lower === null) {
-    lower = window.confirm("Would you like to include lowercase letters?");
-  }
-  if (lower) {
-    console.log (String.fromCharCode(Math.floor(Math.random() * 26) + 97));
-  }
-  console.log("You chose " + lower);
-  return lower;
+    if (number === null || number === ""){
+      alert("Please answer Yes or No");
+      getRandomNumber();
+
+    }else if (number === "yes" || number ==="y"){
+      number = true;
+      return number;
+
+    }else if (number === "no" || number ==="n"){
+      number = false;
+      return number;
+    
+    }else {
+      alert("Please answer Yes or No");
+      getRandomNumber();
+    }
+    return number;
 }
 
-var getRandomNumber = function() {
-  var number = "";
+//Symbols in the Password
+function getRandomSymbol(){
+  Symbol = prompt("Do you want to include special characters in your password? YES or NO");
+    Symbol = Symbol.toLowerCase();
 
-  while (number === "" || number === null) {
-    number = window.confirm("Would you like to include numbers?");
-  }
-  if (number) {
-    randomNumber = String.fromCharCode(Math.floor(Math.random() * 10) + 48)
-    console.log (String.fromCharCode(Math.floor(Math.random() * 10) + 48));
-  }
-  console.log("You chose " + number);
-  return number;
-}
-var getRandomSymbol = function() {
-    var symbols = '';
-  
-    while (symbols === "" || symbols === null) {
-      symbols = window.confirm("Would you like to include symbols?");
+    if (Symbol=== null || Symbol === ""){
+      alert("Please answer Yes or No.");
+      getRandomSymbol();
 
-      if (symbols = true) {
-        randomsymbol = function (){
-          const symbols = '!@#$%^&*(){}[]=<>/,.';
-          return symbols[Math.floor(Math.random() * symbols.length)];
-          
-        }
-          
-        }
-        console.log(randomsymbol());
+    }else if (Symbol === "yes" || Symbol ==="y"){
+      Symbol = true;
+      return Symbol;
 
-  }
+    }else if (Symbol === "no" || Symbol ==="n"){
+      Symbol = false;
+      return Symbol;
+    
+    }else {
+      alert("Please answer Yes or No");
+      getRandomSymbol();
+    }
+    return Symbol;
 }
 
+ //Password Generation
 
-/* END GAME FUNCTIONS */
+function generatePassword(){
+  getCharacterLength();
+  console.log(length);
+  getRandomUpper();
+  console.log(upper);
+  getRandomNumber();
+  console.log(number);
+  getRandomSymbol();
+  console.log(Symbol);
 
-/* GAME INFORMATION / VARIABLES */
+var characters = lowercaseChar;
+var password = "";
+if (upper && number && Symbol){
+  characters += uppercaseChar + numberChar + specialChar;
 
-var playerInfo = {
-  name: getCharacterLength(),
-  upper: getRandomUpper(),
-  lower: getRandomLower(),
-  number: getRandomNumber(),
-  symbol: getRandomSymbol(),
+}else if (upper && number){
+  characters += uppercaseChar + numberChar;
 
-};
+}else if (number && Symbol){
+  characters += numberChar + specialChar;
 
-return "Generate";
+}else if (upper && Symbol){
+  characters += uppercaseChar + specialChar;
+
+}else if (upper){
+  characters += uppercaseChar;
+
+}else if(number){
+  characters += numberChar;
+
+}else if (Symbol){
+  characters += specialChar;
+
+}else{
+  characters === lowercaseChar;
 }
 
-
-/* END GAME INFORMATION / VARIABLES */
-
-/* RUN GAME */
-
- 
- 
- 
- 
- 
-  
+  for(var i = 0; i < length; i++){
+    password += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return password;
+}
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var password1 = "";
+  password1 = generatePassword();
   var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-  
-// go to shop between battles function
-
+  passwordText.value = password1;
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword); 
-
+generateBtn.addEventListener("click", writePassword);
