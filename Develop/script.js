@@ -6,29 +6,24 @@ var generateBtn = document.querySelector("#generate");
   
 function generatePassword() {
   console.log('Hey! You Clicked the button')
-}
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-  
-// go to shop between battles function
-
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword); 
-
-// function to windows for choosing password criteria
+ 
+ // function to windows for choosing password criteria
 var getCharacterLength = function() {
   var name = "";
 
   while (name === "" || name === null) {
-    name = prompt("Choose a length for Your Secure Password. Must be at least 8 characters and no longer than 125 characters.");
+    name = prompt("Choose a length for Your Secure Password. Must be at least 8 characters and no longer than 128 characters.");
   }
-  console.log("You chose " + name + " characters");
+  if (name > 128) {
+
+  name = alert("Choose characters between 8 and 128. Try Again");
+ getCharacterLength()
+
+  } else if (name < 8) {
+    name = alert("Choose characters between 8 and 128. Try Again");
+ getCharacterLength()
+  }
+  
   return name;
 }
 
@@ -47,6 +42,9 @@ var getRandomLower = function() {
 
   while (lower === "" || lower === null) {
     lower = window.confirm("Would you like to include lowercase letters? YES or NO.");
+  }
+  if (lower) {
+    console.log (String.fromCharCode(Math.floor(Math.random() * 26) + 97));
   }
   console.log("You chose " + lower);
   return lower;
@@ -93,3 +91,25 @@ var playerInfo = {
 /* END GAME INFORMATION / VARIABLES */
 
 /* RUN GAME */
+
+ 
+ 
+ 
+ 
+ 
+  return "Generate";
+}
+// Write password to the #password input
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+
+  passwordText.value = password;
+  
+// go to shop between battles function
+
+}
+
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword); 
+
